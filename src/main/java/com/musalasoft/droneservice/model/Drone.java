@@ -1,6 +1,7 @@
 package com.musalasoft.droneservice.model;
 
 import com.musalasoft.droneservice.common.BaseEntity;
+import com.musalasoft.droneservice.constants.DroneModel;
 import com.musalasoft.droneservice.constants.DroneState;
 import lombok.*;
 
@@ -22,7 +23,8 @@ import javax.persistence.Table;
 @Builder
 public class Drone  extends BaseEntity {
     private String serialNo;
-    private String model;
+    @Enumerated(EnumType.STRING)
+    private DroneModel model;
     private double weighLimit;
     private int batteryPercentage;
     @Enumerated(EnumType.STRING)
