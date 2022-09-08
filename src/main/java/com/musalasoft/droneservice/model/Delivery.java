@@ -26,4 +26,5 @@ public class Delivery extends BaseEntity {
     @OneToMany
     private List<MedicineLoad> medicines;
     private boolean completed;
+    private double loadWeight;
 }
