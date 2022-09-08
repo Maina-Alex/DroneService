@@ -3,11 +3,9 @@ package com.musalasoft.droneservice.model;
 import com.musalasoft.droneservice.common.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alex Maina
@@ -23,8 +21,8 @@ import java.util.List;
 public class Delivery extends BaseEntity {
     @ManyToOne
     private Drone drone;
-    @OneToMany
-    private List<MedicineLoad> medicines;
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<MedicineLoad> medicines;
     private boolean completed;
     private double loadWeight;
 }

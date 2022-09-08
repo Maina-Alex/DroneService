@@ -1,7 +1,9 @@
 package com.musalasoft.droneservice.service;
 
+import com.musalasoft.droneservice.Exceptions.ItemAlreadyExistException;
 import com.musalasoft.droneservice.model.Drone;
 import com.musalasoft.droneservice.model.MedicineLoad;
+import com.musalasoft.droneservice.repository.DroneRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,22 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DroneServiceImpl implements DroneService{
+    private final DroneRepository droneRepository;
 
+    /**
+     *
+     * @param drone  object to register
+     * @return newly created drone
+     * <p> Checks for duplicate drone by serial number </p>
+     */
     @Override
     public Drone registerDrone(Drone drone) {
-        throw new IllegalStateException("Operation not implemented");
+       Drone duplicate= droneRepository.findTopBySerialNoAndSoftDeleteFalse (drone.getSerialNo ())
+               .orElse (null);
+       if(duplicate==null){
+           throw new ItemAlreadyExistException ("Drone exists by serial number");
+       }
+       return  droneRepository.save (drone);
     }
 
     @Override

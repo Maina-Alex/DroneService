@@ -54,6 +54,7 @@ class DroneServiceTest {
     @DisplayName ("Junit test to register drone")
     void registerDroneTest(){
         when (droneRepository.save (any (Drone.class))).thenReturn (drone);
+        when( droneRepository.findTopBySerialNoAndSoftDeleteFalse (drone.getSerialNo ())).thenReturn (Optional.empty ());
         Drone savedDrone=droneService.registerDrone (drone);
         assertThat(savedDrone).isInstanceOf (Drone.class);
         assertThat (savedDrone.getId ()).isNotZero ();
