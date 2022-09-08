@@ -57,7 +57,7 @@ class DroneServiceTest {
         when( droneRepository.findTopBySerialNoAndSoftDeleteFalse (drone.getSerialNo ())).thenReturn (Optional.empty ());
         Drone savedDrone=droneService.registerDrone (drone);
         assertThat(savedDrone).isInstanceOf (Drone.class);
-        assertThat (savedDrone.getId ()).isNotZero ();
+        assertThat (savedDrone).isEqualTo (drone);
     }
 
     @Test

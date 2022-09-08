@@ -29,7 +29,7 @@ public class DroneServiceImpl implements DroneService{
     public Drone registerDrone(Drone drone) {
        Drone duplicate= droneRepository.findTopBySerialNoAndSoftDeleteFalse (drone.getSerialNo ())
                .orElse (null);
-       if(duplicate==null){
+       if(duplicate!=null){
            throw new ItemAlreadyExistException ("Drone exists by serial number");
        }
        return  droneRepository.save (drone);
