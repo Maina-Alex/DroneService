@@ -31,7 +31,6 @@ public class DroneServiceImpl implements DroneService{
     private final DeliveryRepository deliveryRepository;
     private final DeliveryLoadRepository deliveryLoadRepository;
     private final MedicineRepository medicineRepository;
-
     /**
      *
      * @param drone  object to register
@@ -49,7 +48,7 @@ public class DroneServiceImpl implements DroneService{
     }
     /**
      * @param droneId  Drone Id
-     * @param medicine medicine load to pack into drone
+     * @param medicineId medicineId load to pack into drone
      * @return boolean indicating whether drone loading was successful or
      */
     @Transactional

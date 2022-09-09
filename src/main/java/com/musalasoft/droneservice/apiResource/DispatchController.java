@@ -74,6 +74,7 @@ public class DispatchController {
         return Mono.fromCallable (()-> {
             List<DeliveryLoad> deliveryLoad= droneService.checkLoadedMedication (droneId);
             UniversalResponse response= UniversalResponse.builder()
+                    .status (200)
                     .message ("Loaded medication")
                     .data (deliveryLoad)
                     .build();
@@ -93,6 +94,7 @@ public class DispatchController {
             Pageable pageable= PageRequest.of (page,size);
             List<Drone> availableDrones= droneService.checkAvailableDrones (pageable);
             UniversalResponse response= UniversalResponse.builder()
+                    .status (200)
                     .message ("Available drones")
                     .data (availableDrones)
                     .build();
@@ -110,6 +112,7 @@ public class DispatchController {
         return Mono.fromCallable (()-> {
             int batteryPerc= droneService.checkDronePercentage (droneId);
             UniversalResponse response= UniversalResponse.builder()
+                    .status (200)
                     .message ("Battery percentage")
                     .data (Map.of("battery", batteryPerc))
                     .build();
@@ -129,6 +132,7 @@ public class DispatchController {
         return Mono.fromCallable (()-> {
             List<DroneAudit> droneAudits= droneAuditService.getDroneAuditByTimeRange (droneId,startDate,endDate);
             UniversalResponse response= UniversalResponse.builder()
+                    .status (200)
                     .message ("Drone Audit list")
                     .data (droneAudits)
                     .build();
