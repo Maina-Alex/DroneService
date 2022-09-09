@@ -12,5 +12,6 @@ public interface DroneRepository extends JpaRepository<Drone,Long> {
     List<Drone> findAllByStateAndSoftDeleteFalse(DroneState droneState, Pageable pageable);
     Optional<Drone> findTopBySerialNoAndSoftDeleteFalse(String serialNo);
     Optional<Drone> findByIdAndSoftDeleteFalse(long id);
+    List<Drone> findAllBySoftDeleteFalse();
 
 }
