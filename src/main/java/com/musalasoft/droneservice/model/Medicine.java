@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Builder
 public class Medicine extends BaseEntity {
     private String name;
-    private String weight;
+    private double weight;
     private String code;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String imageUrl;

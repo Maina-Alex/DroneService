@@ -1,10 +1,10 @@
 package com.musalasoft.droneservice.model;
 
 import com.musalasoft.droneservice.common.BaseEntity;
+import com.musalasoft.droneservice.constants.DeliveryStatus;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,7 +22,9 @@ public class Delivery extends BaseEntity {
     @ManyToOne
     private Drone drone;
     @OneToMany(fetch = FetchType.LAZY)
-    private Set<MedicineLoad> medicines;
-    private boolean completed;
-    private double loadWeight;
+    private Set<DeliveryLoad> medicines;
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus deliveryStatus;
+    private double loadWeight=0;
+
 }

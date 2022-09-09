@@ -17,4 +17,17 @@ public class ExceptionsHandler {
         return ResponseEntity.badRequest ()
                 .body (UniversalResponse.builder ().status (400).message (e.getMessage ()).build ());
     }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<UniversalResponse> handleItemNotFoundException(ItemNotFoundException e){
+        return ResponseEntity.badRequest ()
+                .body (UniversalResponse.builder ().status (400).message (e.getMessage ()).build ());
+    }
+
+    @ExceptionHandler(IllegalOperationException.class)
+    public ResponseEntity<UniversalResponse> handleIllegalOperationException(IllegalOperationException e){
+        return ResponseEntity.badRequest ()
+                .body (UniversalResponse.builder ().status (400).message (e.getMessage ()).build ());
+    }
+
 }

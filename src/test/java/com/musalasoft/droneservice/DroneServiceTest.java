@@ -3,10 +3,10 @@ package com.musalasoft.droneservice;
 import com.musalasoft.droneservice.constants.DroneState;
 import com.musalasoft.droneservice.model.Delivery;
 import com.musalasoft.droneservice.model.Drone;
-import com.musalasoft.droneservice.model.MedicineLoad;
+import com.musalasoft.droneservice.model.DeliveryLoad;
+import com.musalasoft.droneservice.model.Medicine;
 import com.musalasoft.droneservice.repository.DeliveryRepository;
 import com.musalasoft.droneservice.repository.DroneRepository;
-import com.musalasoft.droneservice.repository.MedicineLoadRepository;
 import com.musalasoft.droneservice.service.DroneService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +56,7 @@ class DroneServiceTest {
         when (droneRepository.save (any (Drone.class))).thenReturn (drone);
         when( droneRepository.findTopBySerialNoAndSoftDeleteFalse (drone.getSerialNo ())).thenReturn (Optional.empty ());
         Drone savedDrone=droneService.registerDrone (drone);
-        assertThat(savedDrone).isInstanceOf (Drone.class);
+        assertThat(savedDrone).isInstanceOf (Drone.class).satisfies ();
         assertThat (savedDrone).isEqualTo (drone);
     }
 
@@ -65,7 +65,7 @@ class DroneServiceTest {
     void loadDroneTest(){
         when (droneRepository.findById (any (Long.class))).thenReturn (Optional.of (drone));
         when (deliveryRepository.save (any (Delivery.class))).thenReturn (mock (Delivery.class));
-        boolean loaded=droneService.loadDrone (any (Long.class),anyList ());
+        boolean loaded=droneService.loadDrone (any (Long.class), Mockito.mock (Medicine.class));
         assertThat (loaded).isTrue ();
     }
 
@@ -73,10 +73,10 @@ class DroneServiceTest {
     @DisplayName (("Junit test to test for loaded medication"))
     void checkLoadedMedicationTest(){
         Delivery delivery=mock (Delivery.class);
-        when(deliveryRepository.findDeliveryByDroneIdAndCompletedFalseAndSoftDeleteFalse (Mockito.any (Long.class))).thenReturn (Optional.of (delivery));
-        List<MedicineLoad> medicineLoads=droneService.checkLoadedMedication (Mockito.anyLong ());
-        assertThat (medicineLoads).isNotNull ();
-        assertThat (medicineLoads).isInstanceOf (List.class);
+        when(deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse (Mockito.any (Long.class), )).thenReturn (Optional.of (delivery));
+        List<DeliveryLoad> deliveryLoads =droneService.checkLoadedMedication (Mockito.anyLong ());
+        assertThat (deliveryLoads).isNotNull ();
+        assertThat (deliveryLoads).isInstanceOf (List.class);
 
     }
 

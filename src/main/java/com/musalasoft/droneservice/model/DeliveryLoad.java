@@ -18,8 +18,11 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Builder
-public class MedicineLoad extends BaseEntity {
+public class DeliveryLoad extends BaseEntity {
     @ManyToOne
     private Medicine medicine;
     private int count;
+    @ManyToOne
+    private  Delivery delivery;
+
 }
