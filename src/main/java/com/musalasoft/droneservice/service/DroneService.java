@@ -21,7 +21,6 @@ public interface DroneService {
      * @param medicine medicine load to pack into drone
      * @return success (true) or failed (false)
      */
-
     Delivery loadDrone(long droneId, Medicine medicine);
     /**
      *
@@ -30,6 +29,7 @@ public interface DroneService {
      */
 
     List<DeliveryLoad> checkLoadedMedication(long drone);
+
     /**
      *
      * @param pageable get results as pages

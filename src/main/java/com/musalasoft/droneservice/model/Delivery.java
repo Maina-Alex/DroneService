@@ -26,5 +26,4 @@ public class Delivery extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
     private double loadWeight=0;
-
 }

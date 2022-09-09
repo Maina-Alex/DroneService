@@ -1,10 +1,12 @@
 package com.musalasoft.droneservice;
 
+import com.musalasoft.droneservice.constants.DeliveryStatus;
 import com.musalasoft.droneservice.constants.DroneState;
 import com.musalasoft.droneservice.model.Delivery;
 import com.musalasoft.droneservice.model.Drone;
 import com.musalasoft.droneservice.model.DeliveryLoad;
 import com.musalasoft.droneservice.model.Medicine;
+import com.musalasoft.droneservice.repository.DeliveryLoadRepository;
 import com.musalasoft.droneservice.repository.DeliveryRepository;
 import com.musalasoft.droneservice.repository.DroneRepository;
 import com.musalasoft.droneservice.service.DroneService;
@@ -36,9 +38,15 @@ class DroneServiceTest {
     private DroneRepository droneRepository;
     @MockBean
     private DeliveryRepository deliveryRepository;
+    @MockBean
+    private DeliveryLoadRepository deliveryLoadRepository;
 
 
     private Drone drone;
+    private Delivery delivery;
+
+    private Medicine medicine;
+
 
     @BeforeEach
     public void setupDrone(){
@@ -48,6 +56,21 @@ class DroneServiceTest {
                 .serialNo ("4622822472847")
                 .weighLimit (400)
                 .build ();
+
+        delivery= Delivery.builder ()
+                .deliveryStatus (DeliveryStatus.LOADING)
+                .drone (drone)
+                .loadWeight (0)
+                .build ();
+
+        medicine= Medicine.builder ()
+                .name ("Plifzer")
+                .code ("PL_WYDBGWIAWUXBYW")
+                .weight (100)
+                .image ("")
+                .imageUrl ("")
+                .build ();
+
     }
 
     @Test
@@ -63,17 +86,20 @@ class DroneServiceTest {
     @Test
     @DisplayName ("Junit test to load drone ")
     void loadDroneTest(){
-        when (droneRepository.findById (any (Long.class))).thenReturn (Optional.of (drone));
-        when (deliveryRepository.save (any (Delivery.class))).thenReturn (mock (Delivery.class));
-        boolean loaded=droneService.loadDrone (any (Long.class), Mockito.mock (Medicine.class));
-        assertThat (loaded).isTrue ();
+        when (droneRepository.findByIdAndSoftDeleteFalse (any (Long.class))).thenReturn (Optional.of (drone));
+        when (deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse (drone.getId (),DeliveryStatus.LOADING)).thenReturn (Optional.of (delivery));
+        when (deliveryRepository.save (any (Delivery.class))).thenReturn (delivery);
+        drone.setState (DroneState.LOADING);
+        Delivery savedDelivery=droneService.loadDrone (drone.getId (), medicine);
+        assertThat (savedDelivery).isNotNull ();
+        assertThat (savedDelivery.getLoadWeight ()).isNotZero ();
     }
 
     @Test
     @DisplayName (("Junit test to test for loaded medication"))
     void checkLoadedMedicationTest(){
         Delivery delivery=mock (Delivery.class);
-        when(deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse (Mockito.any (Long.class), )).thenReturn (Optional.of (delivery));
+        when(deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse (Mockito.any (Long.class), DeliveryStatus.LOADING )).thenReturn (Optional.of (delivery));
         List<DeliveryLoad> deliveryLoads =droneService.checkLoadedMedication (Mockito.anyLong ());
         assertThat (deliveryLoads).isNotNull ();
         assertThat (deliveryLoads).isInstanceOf (List.class);

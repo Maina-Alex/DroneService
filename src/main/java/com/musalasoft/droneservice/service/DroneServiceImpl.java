@@ -45,7 +45,6 @@ public class DroneServiceImpl implements DroneService{
        }
        return  droneRepository.save (drone);
     }
-
     /**
      * @param droneId  Drone Id
      * @param medicine medicine load to pack into drone
@@ -57,9 +56,13 @@ public class DroneServiceImpl implements DroneService{
         Drone drone = droneRepository.findByIdAndSoftDeleteFalse (droneId).orElse (null);
         if(drone==null)
             throw new ItemNotFoundException ("Drone not found");
-        // check if drone is on loading bay
-        if(drone.getState ()!= DroneState.LOADING){
-            throw new IllegalOperationException ("Drone not staged for loading");
+        // check drone for percentage levels
+        if(drone.getBatteryPercentage ()<25){
+            throw new IllegalArgumentException ("Cannot load drone, battery percentage is below 25%");
+        }
+        // check if drone is in loading state or is in idle
+        if(!(drone.getState ()== DroneState.LOADING || drone.getState ()==DroneState.IDLE)){
+            throw new IllegalOperationException ("Drone is not in idle or loading state ");
         }
         // check for drone delivery with status loading
         Delivery loadingDelivery=deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse(droneId, DeliveryStatus.LOADING).orElse (null);
@@ -77,14 +80,12 @@ public class DroneServiceImpl implements DroneService{
         //load delivery into drone
         return loadDeliveryLoadIntoDrone (loadingDelivery, medicine);
     }
-
     private Delivery loadDeliveryLoadIntoDrone(Delivery delivery,Medicine medicine){
         //add medicine to delivery load
         DeliveryLoad deliveryLoad= deliveryLoadRepository.findDeliveryLoadByDeliveryIdAndMedicineIdAndSoftDeleteFalse (delivery.getId (),medicine.getId ())
                 .orElse (null);
         if(deliveryLoad!=null){
             deliveryLoad.setCount (deliveryLoad.getCount ()+1);
-
         }else{
             deliveryLoad= DeliveryLoad.builder ()
                     .delivery (delivery)
@@ -92,10 +93,16 @@ public class DroneServiceImpl implements DroneService{
                     .count (1)
                     .build ();
         }
-        deliveryLoadRepository.save (deliveryLoad);
+        Drone drone= delivery.getDrone ();
+        //change drone status to loading
+        if(drone.getState ()!= DroneState.LOADING) {
+            drone.setState (DroneState.LOADING);
+            deliveryLoadRepository.save (deliveryLoad);
+        }
         delivery.setLoadWeight (delivery.getLoadWeight ()+ medicine.getWeight ());
         return deliveryRepository.save (delivery);
     }
+
 
     @Override
     public List<DeliveryLoad> checkLoadedMedication(long drone) {
