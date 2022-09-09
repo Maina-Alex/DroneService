@@ -35,7 +35,7 @@ public interface DroneService {
      * @param pageable get results as pages
      * @return a list of available drones
      */
-    List<Drone> checkAvailableDrone(Pageable pageable);
+    List<Drone> checkAvailableDrones(Pageable pageable);
 
     /**
      *

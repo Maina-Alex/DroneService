@@ -13,7 +13,6 @@ import com.musalasoft.droneservice.service.DroneService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,12 +39,12 @@ class DroneServiceTest {
     private DeliveryRepository deliveryRepository;
     @MockBean
     private DeliveryLoadRepository deliveryLoadRepository;
-
-
     private Drone drone;
     private Delivery delivery;
 
     private Medicine medicine;
+
+    private DeliveryLoad deliveryLoad;
 
 
     @BeforeEach
@@ -70,7 +69,11 @@ class DroneServiceTest {
                 .image ("")
                 .imageUrl ("")
                 .build ();
-
+        deliveryLoad= DeliveryLoad.builder ()
+                .delivery (delivery)
+                .medicine (medicine)
+                .count (1)
+                .build ();
     }
 
     @Test
@@ -98,30 +101,26 @@ class DroneServiceTest {
     @Test
     @DisplayName (("Junit test to test for loaded medication"))
     void checkLoadedMedicationTest(){
-        Delivery delivery=mock (Delivery.class);
-        when(deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse (Mockito.any (Long.class), DeliveryStatus.LOADING )).thenReturn (Optional.of (delivery));
-        List<DeliveryLoad> deliveryLoads =droneService.checkLoadedMedication (Mockito.anyLong ());
+        when(droneRepository.findByIdAndSoftDeleteFalse(any (Long.class))).thenReturn (Optional.of (drone));
+        drone.setState (DroneState.LOADING);
+        when(deliveryLoadRepository.checkLoadedMedicationOnDrone (drone.getId ())).thenReturn (List.of (deliveryLoad));
+        List<DeliveryLoad> deliveryLoads =droneService.checkLoadedMedication (drone.getId ());
         assertThat (deliveryLoads).isNotNull ();
         assertThat (deliveryLoads).isInstanceOf (List.class);
-
     }
-
     @Test
     @DisplayName ("Junit test to test for get available drone")
     void checkAvailableDroneTest(){
         Pageable pageable= PageRequest.of (0,5);
         List<Drone> droneList= List.of (drone);
-        when (droneRepository.findAllByState (DroneState.IDLE,pageable)).thenReturn (droneList);
-        assertThat (droneService.checkAvailableDrone (pageable)).isEqualTo (droneList);
+        when (droneRepository.findAllByStateAndSoftDeleteFalse (DroneState.IDLE,pageable)).thenReturn (droneList);
+        assertThat (droneService.checkAvailableDrones (pageable)).isEqualTo (droneList);
     }
 
     @Test
-    @DisplayName ("Junit test to test for check Drone Percentage")
+    @DisplayName ("Junit test to check Drone Percentage")
     void checkDronePercentage(){
-        when (droneRepository.findById (anyLong ())).thenReturn (Optional.of (drone));
+        when (droneRepository.findByIdAndSoftDeleteFalse (anyLong ())).thenReturn (Optional.of (drone));
         assertThat (droneService.checkDronePercentage (anyLong ())).isEqualTo (drone.getBatteryPercentage ());
     }
-
-
-
 }

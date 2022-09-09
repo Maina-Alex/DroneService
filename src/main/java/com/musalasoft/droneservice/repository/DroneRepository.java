@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DroneRepository extends JpaRepository<Drone,Long> {
-    List<Drone> findAllByState(DroneState droneState,Pageable pageable);
+    List<Drone> findAllByStateAndSoftDeleteFalse(DroneState droneState, Pageable pageable);
     Optional<Drone> findTopBySerialNoAndSoftDeleteFalse(String serialNo);
     Optional<Drone> findByIdAndSoftDeleteFalse(long id);
+
 }

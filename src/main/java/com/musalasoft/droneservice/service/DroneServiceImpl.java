@@ -102,7 +102,6 @@ public class DroneServiceImpl implements DroneService{
         delivery.setLoadWeight (delivery.getLoadWeight ()+ medicine.getWeight ());
         return deliveryRepository.save (delivery);
     }
-
     /**
      *
      * @param droneId drone id to for loaded medicines
@@ -116,18 +115,23 @@ public class DroneServiceImpl implements DroneService{
             throw new ItemNotFoundException ("Drone does not exist");
         }
         // check if drone is in load state
-        if(drone.getState ()==DroneState.LOADING || drone.getState ()==DroneState.DELIVERING)
+        if(!(drone.getState ()==DroneState.LOADING || drone.getState ()==DroneState.DELIVERING))
             throw new IllegalStateException ("Drone is not in loading or delivering state");
         return deliveryLoadRepository.checkLoadedMedicationOnDrone (droneId);
     }
 
     @Override
-    public List<Drone> checkAvailableDrone(Pageable pageable) {
-        throw new IllegalStateException("Operation not implemented");
+    public List<Drone> checkAvailableDrones(Pageable pageable) {
+        return droneRepository.findAllByStateAndSoftDeleteFalse (DroneState.IDLE, pageable);
     }
 
     @Override
-    public int checkDronePercentage(long drone) {
-        throw new IllegalStateException("Operation not implemented");
+    public int checkDronePercentage(long droneId) {
+        //check if drone exists
+        Drone drone= droneRepository.findByIdAndSoftDeleteFalse (droneId).orElse (null);
+        if(drone== null){
+            throw new ItemNotFoundException ("Drone does not exist");
+        }
+        return drone.getBatteryPercentage ();
     }
 }
