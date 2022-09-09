@@ -93,7 +93,7 @@ class DroneServiceTest {
         when (deliveryRepository.findDeliveryByDroneIdAndDeliveryStatusAndSoftDeleteFalse (drone.getId (),DeliveryStatus.LOADING)).thenReturn (Optional.of (delivery));
         when (deliveryRepository.save (any (Delivery.class))).thenReturn (delivery);
         drone.setState (DroneState.LOADING);
-        Delivery savedDelivery=droneService.loadDrone (drone.getId (), medicine);
+        Delivery savedDelivery=droneService.loadDrone (drone.getId (), medicine.getId ());
         assertThat (savedDelivery).isNotNull ();
         assertThat (savedDelivery.getLoadWeight ()).isNotZero ();
     }

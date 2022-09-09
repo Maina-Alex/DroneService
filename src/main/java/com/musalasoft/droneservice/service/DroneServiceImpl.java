@@ -12,6 +12,7 @@ import com.musalasoft.droneservice.model.Medicine;
 import com.musalasoft.droneservice.repository.DeliveryLoadRepository;
 import com.musalasoft.droneservice.repository.DeliveryRepository;
 import com.musalasoft.droneservice.repository.DroneRepository;
+import com.musalasoft.droneservice.repository.MedicineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class DroneServiceImpl implements DroneService{
     private final DroneRepository droneRepository;
     private final DeliveryRepository deliveryRepository;
     private final DeliveryLoadRepository deliveryLoadRepository;
+    private final MedicineRepository medicineRepository;
 
     /**
      *
@@ -52,13 +54,18 @@ public class DroneServiceImpl implements DroneService{
      */
     @Transactional
     @Override
-    public Delivery loadDrone(long droneId, Medicine medicine) {
+    public Delivery loadDrone(long droneId, long medicineId) {
         Drone drone = droneRepository.findByIdAndSoftDeleteFalse (droneId).orElse (null);
         if(drone==null)
             throw new ItemNotFoundException ("Drone not found");
         // check drone for percentage levels
         if(drone.getBatteryPercentage ()<25){
             throw new IllegalArgumentException ("Cannot load drone, battery percentage is below 25%");
+        }
+        //check if medicine with given id exists
+        Medicine medicine= medicineRepository.findMedicineByIdAndSoftDeleteFalse (medicineId).orElse (null);
+        if(medicine==null){
+            throw new ItemNotFoundException ("Medicine not found");
         }
         // check if drone is in loading state or is in idle
         if(!(drone.getState ()== DroneState.LOADING || drone.getState ()==DroneState.IDLE)){

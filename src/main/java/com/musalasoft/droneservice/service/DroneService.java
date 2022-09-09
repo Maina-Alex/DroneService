@@ -3,7 +3,6 @@ package com.musalasoft.droneservice.service;
 import com.musalasoft.droneservice.model.Delivery;
 import com.musalasoft.droneservice.model.Drone;
 import com.musalasoft.droneservice.model.DeliveryLoad;
-import com.musalasoft.droneservice.model.Medicine;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -18,10 +17,10 @@ public interface DroneService {
     Drone registerDrone(Drone drone);
     /**
      * @param droneId  Drone Id
-     * @param medicine medicine load to pack into drone
-     * @return success (true) or failed (false)
+     * @param medicineId Medicine Id
+     * @return delivery order details
      */
-    Delivery loadDrone(long droneId, Medicine medicine);
+    Delivery loadDrone(long droneId, long medicineId);
     /**
      *
      * @param drone drone id to for loaded medicines
