@@ -39,8 +39,7 @@ import static org.mockito.Mockito.*;
 class DispatchControllerIntegrationTest {
     @Autowired
     public DroneService droneService;
-    @Autowired
-    private DroneAuditService droneAuditService;
+
     private Delivery delivery;
     @MockBean
     private DroneRepository droneRepository;
@@ -85,7 +84,7 @@ class DispatchControllerIntegrationTest {
                 .code ("PL_WYDBGWIAWUXBYW")
                 .weight (100)
                 .image ("")
-                .imageUrl ("")
+                .image ("")
                 .build ();
         deliveryLoad= DeliveryLoad.builder ()
                 .delivery (delivery)

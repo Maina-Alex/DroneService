@@ -27,7 +27,7 @@ public class BaseEntity {
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Africa/Nairobi")
     public Date createdOn;
-    @Column(name = "softDelete", columnDefinition = "char(1) default 0")
+    @Column(name = "softDelete")
     @JsonIgnore
     public boolean softDelete;
     @PrePersist

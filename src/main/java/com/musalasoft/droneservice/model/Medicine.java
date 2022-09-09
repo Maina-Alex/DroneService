@@ -28,6 +28,5 @@ public class Medicine extends BaseEntity {
     @Pattern(regexp = "[_A-Z0-9]+(_[A-Z]+)*$")
     private String code;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String imageUrl;
     private String image;
 }

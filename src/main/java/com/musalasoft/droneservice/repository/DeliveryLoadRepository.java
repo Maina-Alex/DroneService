@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface DeliveryLoadRepository extends JpaRepository<DeliveryLoad,Long> {
 
     Optional<DeliveryLoad> findDeliveryLoadByDeliveryIdAndMedicineIdAndSoftDeleteFalse(long deliveryId,long medicineId);
-    @Query(value = "select DeliveryLoad from DeliveryLoad dl " +
-            "inner join Delivery d on d.id= dl.delivery.id" +
-            " inner join Drone dr  on d.drone.id=dr.id" +
-            " where d.deliveryStatus='LOADING' or d.deliveryStatus='DELIVERING' and dr.id=?1")
+    @Query(nativeQuery = true,value = "select * from tb_delivery dl " +
+            "inner join tb_delivery d on d.id= dl.delivery_id" +
+            " inner join tb_drone dr  on d.drone_id=dr.id" +
+            " where d.deliveryStatus='LOADING' or d.deliveryStatus='DELIVERING' and dr.id=:droneId")
     List<DeliveryLoad> checkLoadedMedicationOnDrone(long droneId);
 }

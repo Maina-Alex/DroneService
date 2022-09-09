@@ -67,7 +67,7 @@ class DroneServiceTest {
                 .code ("PL_WYDBGWIAWUXBYW")
                 .weight (100)
                 .image ("")
-                .imageUrl ("")
+                .image ("")
                 .build ();
         deliveryLoad= DeliveryLoad.builder ()
                 .delivery (delivery)
