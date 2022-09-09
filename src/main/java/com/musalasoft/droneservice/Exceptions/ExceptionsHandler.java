@@ -30,4 +30,11 @@ public class ExceptionsHandler {
                 .body (UniversalResponse.builder ().status (400).message (e.getMessage ()).build ());
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<UniversalResponse> handleIllegalStateException(IllegalStateException e){
+        return ResponseEntity.badRequest ()
+                .body (UniversalResponse.builder ().status (400).message (e.getMessage ()).build ());
+    }
+
+
 }
