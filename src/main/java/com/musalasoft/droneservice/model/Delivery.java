@@ -21,8 +21,6 @@ import java.util.Set;
 public class Delivery extends BaseEntity {
     @ManyToOne
     private Drone drone;
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<DeliveryLoad> medicines;
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
     private double loadWeight=0;

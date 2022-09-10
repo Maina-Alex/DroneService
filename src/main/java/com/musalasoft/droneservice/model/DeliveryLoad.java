@@ -1,5 +1,6 @@
 package com.musalasoft.droneservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.musalasoft.droneservice.common.BaseEntity;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import javax.persistence.Table;
  * @created 08/09/2022
  **/
 @Entity
-@Table(name="tb_delivery")
+@Table(name="tb_delivery_load")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,6 +24,7 @@ public class DeliveryLoad extends BaseEntity {
     private Medicine medicine;
     private int count;
     @ManyToOne
+    @JsonIgnore
     private  Delivery delivery;
 
 }

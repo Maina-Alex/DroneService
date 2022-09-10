@@ -1,6 +1,8 @@
 package com.musalasoft.droneservice.service;
 
+import com.musalasoft.droneservice.Exceptions.ItemNotFoundException;
 import com.musalasoft.droneservice.constants.DroneState;
+import com.musalasoft.droneservice.model.Drone;
 import com.musalasoft.droneservice.model.DroneAudit;
 import com.musalasoft.droneservice.repository.DroneAuditRepository;
 import com.musalasoft.droneservice.repository.DroneRepository;
@@ -53,6 +55,9 @@ public class DroneAuditServiceImpl implements  DroneAuditService {
 
     @Override
     public List<DroneAudit> getDroneAuditByTimeRange(long droneId, Date startDate, Date endDate) {
+        Drone drone = droneRepository.findByIdAndSoftDeleteFalse (droneId).orElse (null);
+        if(drone==null)
+            throw new ItemNotFoundException ("Drone not found");
         return droneAuditRepository.findAllByDroneIdAndCreatedOnBetween (droneId,startDate,endDate);
     }
 }

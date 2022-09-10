@@ -59,7 +59,7 @@ public class DroneServiceImpl implements DroneService{
             throw new ItemNotFoundException ("Drone not found");
         // check drone for percentage levels
         if(drone.getBatteryPercentage ()<25){
-            throw new IllegalArgumentException ("Cannot load drone, battery percentage is below 25%");
+            throw new IllegalOperationException ("Cannot load drone, battery percentage is below 25%");
         }
         //check if medicine with given id exists
         Medicine medicine= medicineRepository.findMedicineByIdAndSoftDeleteFalse (medicineId).orElse (null);
@@ -103,8 +103,9 @@ public class DroneServiceImpl implements DroneService{
         //change drone status to loading
         if(drone.getState ()!= DroneState.LOADING) {
             drone.setState (DroneState.LOADING);
-            deliveryLoadRepository.save (deliveryLoad);
+            droneRepository.save (drone);
         }
+        deliveryLoadRepository.save (deliveryLoad);
         delivery.setLoadWeight (delivery.getLoadWeight ()+ medicine.getWeight ());
         return deliveryRepository.save (delivery);
     }

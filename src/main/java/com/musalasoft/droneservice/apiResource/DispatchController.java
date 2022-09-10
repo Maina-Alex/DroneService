@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -128,7 +129,9 @@ public class DispatchController {
      * @return
      */
     @GetMapping("/audit/logs")
-    public Mono<ResponseEntity<UniversalResponse>>getDroneAuditLogs(@RequestParam long droneId, @RequestParam Date startDate, @RequestParam Date endDate){
+    public Mono<ResponseEntity<UniversalResponse>>getDroneAuditLogs(@RequestParam long droneId,
+                                                                    @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+                                                                    @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate){
         return Mono.fromCallable (()-> {
             List<DroneAudit> droneAudits= droneAuditService.getDroneAuditByTimeRange (droneId,startDate,endDate);
             UniversalResponse response= UniversalResponse.builder()
