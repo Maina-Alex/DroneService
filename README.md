@@ -30,9 +30,9 @@ In order to run on docker:
 Requirements:
  1. Docker installed
 
-Build Image:
- docker build -t drone-service/8080 .
+# Build Image:
+ ## docker build -t drone-service/8080 .
  
-Run Container:
-  docker run -d -p 8080:8080  --name drone-service-container/8080 drone-service/8080
+#Run Container:
+  ## docker run -d -p 8080:8080  --name drone-service-container/8080 drone-service/8080
  
