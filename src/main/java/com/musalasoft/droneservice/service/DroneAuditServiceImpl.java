@@ -5,6 +5,8 @@ import com.musalasoft.droneservice.model.DroneAudit;
 import com.musalasoft.droneservice.repository.DroneAuditRepository;
 import com.musalasoft.droneservice.repository.DroneRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -25,9 +27,11 @@ public class DroneAuditServiceImpl implements  DroneAuditService {
     private final DroneCommunicationService droneCommunicationService;
     private final DroneRepository droneRepository;
 
-    private final Executor executor;
+    @Autowired
+    @Qualifier("auditExecutor")
+    private  Executor executor;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 10000)
     @Override
     public void checkDronePercentages() {
         Mono.fromRunnable (()-> droneRepository.findAllBySoftDeleteFalse ()
