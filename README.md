@@ -35,4 +35,10 @@ Requirements:
  
 # Run Container:
   ## docker run -d -p 8080:8080  --name drone-service-container/8080 drone-service/8080
+  
+# Api Collection
+  
+  Access the Api collection on: 
+    ### 1. Project postmanRequest folder
+    ### 2. Postman documentation link https://documenter.getpostman.com/view/10850939/VVdgc6YH
  
