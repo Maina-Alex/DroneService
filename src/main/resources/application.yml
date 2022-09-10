@@ -1,0 +1,27 @@
+
+spring:
+  jpa:
+    database-platform: com.musalasoft.droneservice.config.SQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+#      hibernate:
+#        session:
+#          events:
+#            log:
+#              LOG_QUERIES_SLOWER_THAN_MS: 3
+#        hbm2ddl:
+#          import: data.sql
+        generate_statistics: true
+  datasource:
+    url: jdbc:sqlite:dronesample.db
+    driver-class-name: org.sqlite.JDBC
+
+#  sql:
+#    init:
+#      mode: always
+
+#      username: admin
+#      password: admin
+
