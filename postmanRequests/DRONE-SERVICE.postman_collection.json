@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "56062d85-b272-451f-9211-49bf06d4ba21",
+		"name": "DRONE-SERRVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10850939"
+	},
+	"item": [
+		{
+			"name": "Register drone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serialNo\": \"ETWU_ETV537_RRT\",\r\n    \"model\": \"Middleweight\",\r\n    \"weighLimit\":300,\r\n    \"batteryPercentage\":50,\r\n    \"state\": \"IDLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/drone/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"drone",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Register drone",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serialNo\": \"ETWU_ETV537_RRT\",\r\n    \"model\": \"Middleweight\",\r\n    \"weighLimit\":300,\r\n    \"batteryPercentage\":50,\r\n    \"state\": \"IDLE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/drone/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"drone",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "218"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"message\": \"Drone registered successfully\",\n    \"data\": {\n        \"id\": 1001,\n        \"createdOn\": \"2022-09-10 12:05:05\",\n        \"serialNo\": \"ETWU_ETV537_RRT\",\n        \"model\": \"Middleweight\",\n        \"weighLimit\": 300,\n        \"batteryPercentage\": 50,\n        \"state\": \"IDLE\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Load drone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"droneId\": 1001,\r\n    \"medicineId\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/drone/load/drone",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"drone",
+						"load",
+						"drone"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Load drone",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"droneId\": 1001,\r\n    \"medicineId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/drone/load/drone",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"drone",
+								"load",
+								"drone"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "314"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"message\": \"Loaded drone successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"createdOn\": \"2022-09-10 12:25:46\",\n        \"drone\": {\n            \"id\": 1001,\n            \"createdOn\": \"2022-09-10 12:25:42\",\n            \"serialNo\": \"ETWU_ETV537_RRT\",\n            \"model\": \"Middleweight\",\n            \"weighLimit\": 300,\n            \"batteryPercentage\": 50,\n            \"state\": \"LOADING\"\n        },\n        \"deliveryStatus\": \"LOADING\",\n        \"loadWeight\": 108\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Loaded Medications",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/drone/loaded/medication?droneId=1001",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"drone",
+						"loaded",
+						"medication"
+					],
+					"query": [
+						{
+							"key": "droneId",
+							"value": "1001"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Loaded Medications",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/drone/loaded/medication?droneId=1001",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"drone",
+								"loaded",
+								"medication"
+							],
+							"query": [
+								{
+									"key": "droneId",
+									"value": "1001"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "218"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"message\": \"Loaded medication\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"createdOn\": \"2022-09-10 13:08:42\",\n            \"medicine\": {\n                \"id\": 5,\n                \"createdOn\": \"2021-11-14 06:48:55\",\n                \"name\": \"CFXUXPSry\",\n                \"weight\": 108,\n                \"code\": \"EFF_83H_8K01RG\"\n            },\n            \"count\": 2\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get available drone",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/drone/available/drone?size=10&page=0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"drone",
+						"available",
+						"drone"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get available drone",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/drone/available/drone?size=10&page=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"drone",
+								"available",
+								"drone"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1570"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"message\": \"Available drones\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"createdOn\": \"2022-05-11 02:46:38\",\n            \"serialNo\": \"EGQ_37W_6P97KJ\",\n            \"model\": \"Heavyweight\",\n            \"weighLimit\": 473,\n            \"batteryPercentage\": 34,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 30,\n            \"createdOn\": \"2021-12-09 04:22:42\",\n            \"serialNo\": \"URS_55E_9D55PA\",\n            \"model\": \"Cruiserweight\",\n            \"weighLimit\": 161,\n            \"batteryPercentage\": 63,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 42,\n            \"createdOn\": \"2022-04-07 11:41:35\",\n            \"serialNo\": \"QZU_02S_0Z18SZ\",\n            \"model\": \"Lightweight\",\n            \"weighLimit\": 286,\n            \"batteryPercentage\": -4,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 46,\n            \"createdOn\": \"2022-06-29 04:34:55\",\n            \"serialNo\": \"UAH_27U_3W82JT\",\n            \"model\": \"Lightweight\",\n            \"weighLimit\": 311,\n            \"batteryPercentage\": 55,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 53,\n            \"createdOn\": \"2022-06-04 07:27:44\",\n            \"serialNo\": \"DLT_33V_8T99WF\",\n            \"model\": \"Cruiserweight\",\n            \"weighLimit\": 366,\n            \"batteryPercentage\": 50,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 56,\n            \"createdOn\": \"2021-10-10 10:05:04\",\n            \"serialNo\": \"GKH_77U_0J51AK\",\n            \"model\": \"Cruiserweight\",\n            \"weighLimit\": 262,\n            \"batteryPercentage\": -10,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 66,\n            \"createdOn\": \"2022-04-18 05:41:14\",\n            \"serialNo\": \"HOE_26V_5W80YP\",\n            \"model\": \"Heavyweight\",\n            \"weighLimit\": 172,\n            \"batteryPercentage\": 5,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 69,\n            \"createdOn\": \"2021-11-11 17:40:09\",\n            \"serialNo\": \"NXI_78E_3B79CC\",\n            \"model\": \"Heavyweight\",\n            \"weighLimit\": 296,\n            \"batteryPercentage\": -25,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 73,\n            \"createdOn\": \"2022-04-07 04:06:41\",\n            \"serialNo\": \"VXV_46E_2G85IP\",\n            \"model\": \"Middleweight\",\n            \"weighLimit\": 172,\n            \"batteryPercentage\": 68,\n            \"state\": \"IDLE\"\n        },\n        {\n            \"id\": 84,\n            \"createdOn\": \"2022-05-28 01:40:58\",\n            \"serialNo\": \"JZL_53B_2G65VT\",\n            \"model\": \"Lightweight\",\n            \"weighLimit\": 222,\n            \"batteryPercentage\": 64,\n            \"state\": \"IDLE\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Battery percentage",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/drone/available/drone?size=10&page=0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"drone",
+						"available",
+						"drone"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Battery percentage",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/drone/check/percentage?droneId=1001",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"drone",
+								"check",
+								"percentage"
+							],
+							"query": [
+								{
+									"key": "droneId",
+									"value": "1001"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "67"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"message\": \"Battery percentage\",\n    \"data\": {\n        \"battery\": 15\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Drone battery percentage audit logs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/drone/audit/logs?startDate=2022-08-10&endDate=2022-09-11&droneId=1001",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"drone",
+						"audit",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2022-08-10"
+						},
+						{
+							"key": "endDate",
+							"value": "2022-09-11"
+						},
+						{
+							"key": "droneId",
+							"value": "1001"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Drone battery percentage audit logs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/drone/audit/logs?startDate=2022-08-10&endDate=2022-09-11&droneId=1001",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"drone",
+								"audit",
+								"logs"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2022-08-10"
+								},
+								{
+									"key": "endDate",
+									"value": "2022-09-11"
+								},
+								{
+									"key": "droneId",
+									"value": "1001"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "807"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"message\": \"Drone Audit list\",\n    \"data\": [\n        {\n            \"id\": 738,\n            \"createdOn\": \"2022-09-10 13:31:34\",\n            \"drone\": {\n                \"id\": 1001,\n                \"createdOn\": \"2022-09-10 13:31:25\",\n                \"serialNo\": \"ETWU_ETV537_RRT\",\n                \"model\": \"Middleweight\",\n                \"weighLimit\": 300,\n                \"batteryPercentage\": 47,\n                \"state\": \"IDLE\"\n            },\n            \"batteryPercentage\": 49,\n            \"droneState\": \"IDLE\"\n        },\n        {\n            \"id\": 1246,\n            \"createdOn\": \"2022-09-10 13:31:43\",\n            \"drone\": {\n                \"id\": 1001,\n                \"createdOn\": \"2022-09-10 13:31:25\",\n                \"serialNo\": \"ETWU_ETV537_RRT\",\n                \"model\": \"Middleweight\",\n                \"weighLimit\": 300,\n                \"batteryPercentage\": 47,\n                \"state\": \"IDLE\"\n            },\n            \"batteryPercentage\": 48,\n            \"droneState\": \"IDLE\"\n        },\n        {\n            \"id\": 1809,\n            \"createdOn\": \"2022-09-10 13:31:53\",\n            \"drone\": {\n                \"id\": 1001,\n                \"createdOn\": \"2022-09-10 13:31:25\",\n                \"serialNo\": \"ETWU_ETV537_RRT\",\n                \"model\": \"Middleweight\",\n                \"weighLimit\": 300,\n                \"batteryPercentage\": 47,\n                \"state\": \"IDLE\"\n            },\n            \"batteryPercentage\": 47,\n            \"droneState\": \"IDLE\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}
