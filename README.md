@@ -40,6 +40,6 @@ Requirements:
   
  Access the Api collection on: 
  
-    ## 1. Project postmanRequest folder
-    ##  2. Postman documentation link https://documenter.getpostman.com/view/10850939/VVdgc6YH
+   1. Project postmanRequest folder
+   2. Postman documentation link https://documenter.getpostman.com/view/10850939/VVdgc6YH
  
